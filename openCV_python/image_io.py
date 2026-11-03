@@ -108,7 +108,9 @@ def flatten_alpha(
     alpha 加权混合：结果 = 前景 * a + 背景 * (1 - a)，默认白底。
     """
     if img.ndim == 2:
-        return cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+        # 本来就是灰度图，保持 1 通道即可。不要转成 3 通道，
+        # 否则灰度图存成 JPG 后会被识别成 BGR 彩色。
+        return img.copy()
     if img.shape[2] == 3:
         return img.copy()
     if img.shape[2] != 4:
@@ -144,6 +146,10 @@ def save_image(
     """把数组编码成图片文件；返回实际保存的绝对路径。"""
     out = Path(out_path)
     ext = out.suffix.lower()
+    if not ext:
+        raise ImageToolError(
+            f"输出路径缺少扩展名，无法确定保存格式：{out}（例如写成 {out}.jpg）"
+        )
     if ext not in WRITABLE_EXTS:
         raise ImageToolError(
             f"不支持的输出格式 {ext!r}，可用：{', '.join(sorted(WRITABLE_EXTS))}"

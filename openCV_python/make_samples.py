@@ -35,7 +35,11 @@ def build_rgba() -> np.ndarray:
     """带透明通道的 PNG：中心圆不透明，圆外完全透明。"""
     rgba = np.zeros((H, W, 4), dtype=np.uint8)
     rgba[:, :, :3] = (200, 60, 30)               # BGR 蓝色
-    cv2.circle(rgba[:, :, 3], (160, 120), 80, 255, -1)  # 只画 alpha 通道
+    # 注意：rgba[:, :, 3] 不是连续内存，直接传给 cv2.circle 在 OpenCV 5 会报错。
+    # 所以先在独立的二维数组上画圆，再整体写回 alpha 通道。
+    alpha = np.zeros((H, W), dtype=np.uint8)
+    cv2.circle(alpha, (160, 120), 80, 255, -1)
+    rgba[:, :, 3] = alpha
     return rgba
 
 

@@ -145,7 +145,8 @@ def run(args: argparse.Namespace) -> int:
         out_ext = normalize_target(args.to)
         if args.output and Path(args.output).suffix.lower() != out_ext:
             raise ImageToolError(
-                f"--output 的扩展名与 --to {out_ext} 不一致，请改成相同格式"
+                f"--output 的扩展名与 --to {out_ext.lstrip('.')} 不一致，"
+                "请改成相同格式"
             )
         result = convert_image(img, out_ext)
         tag = f"convert_{out_ext.lstrip('.')}"

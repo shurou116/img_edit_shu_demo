@@ -29,7 +29,7 @@
 
 代码由 4 个模块组成，每个文件的职责：
   image_io.py      读写图片、判断格式和颜色模式、生成输出路径
-  image_info.py    整理并格式化 5 项基础信息
+  image_info.py    整理并格式化 6 项基础信息
   image_edits.py   6 个编辑函数（只处理数组，不碰文件）
   image_tool.py    命令行入口，解析参数、打印结果和错误
   make_samples.py  生成示例图片（可选，用来照着下面的命令练习）
