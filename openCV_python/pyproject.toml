@@ -1,0 +1,19 @@
+[project]
+name = "image-tool"
+version = "0.1.0"
+description = "读取图片基础信息并完成简单图片编辑的命令行工具（基于 OpenCV）"
+requires-python = ">=3.10"
+dependencies = [
+    "opencv-python>=4.8,<5",
+    "numpy>=1.24",
+]
+
+[project.scripts]
+image-tool = "image_tool:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["image_io", "image_info", "image_edits", "image_tool"]
